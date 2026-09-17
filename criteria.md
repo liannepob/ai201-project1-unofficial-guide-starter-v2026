@@ -58,6 +58,7 @@ in at least 4 of 5 tries.
 ## 4. Something about your chunks
 
 <!-- YOU WRITE THIS ONE.
+     Making sure each chunk in a sample of 10 is under 40 characters or over 500 characters, and none cuts off mid-sentence. 
 
      How would you know if your chunks were the right size? Name something
      countable or observable.
@@ -72,14 +73,16 @@ in at least 4 of 5 tries.
 
 
 **Why this target:**
-
+<!--
+No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at either end.
+>
 
 
 ---
 
 ## 5. Your choice
 
-<!-- YOU WRITE THIS ONE TOO.
+<!-- Every source the system names actually contains the elements used in the answer, in at least 4 of my 5 test questions.
 
      Pick something you actually care about getting right. It could be about
      speed, about refusals, about a particular kind of question your corpus
@@ -90,6 +93,8 @@ in at least 4 of 5 tries.
 
 
 **Why this target:**
+<!--
+Every source the system names actually contains the specific fact used in the answer, in at least 4 of my 5 test questions.>
 
 
 
