@@ -1,6 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
+Lianne Poblador - campus_life corpus
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -22,16 +22,20 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
+     This system answers questions about a `campus_life` corpus, a set of
+     short forum-style posts covering things like course workloads, dorm
+     amenities and costs, dining hall wait times, and administrative deadlines.
+     Ask it a question a student would actually ask (like "how much does laundry
+     cost in the dorms?") and it retrieves the relevant post and answers from it,
+     citing the source file. If you ask something outside the corpus, it says so
+     instead of guessing.
 
-     Milestone 5. -->
+     Milestone 5.
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size:** 800
+**Overlap:** 120
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -59,26 +63,55 @@
 **Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 ```
 
 **Chunk 2** — source: `course_biol_160.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+BIOL 160 Cell Biology
+
+I lived here my sophomore year. Format is lecture three times a week with a weekly lab. Assessment: four unit tests and a cumulative final. Not curved.
+
+Expect 9 to 11 hours a week, the heaviest first-year course by reputation.
+
+The one piece of advice: the unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
 ```
 
 **Chunk 3** — source: `course_hist_118_workload.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+Workload for HIST 118 Modern World History
+
+People keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.
+
+It's front-loaded — the first month is heavier than the rest, partly because you're learning the format.
 ```
 
 **Chunk 4** — source: `dining_pellew_dining_hall_followup.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+Re: Pellew Dining Hall
+
+Adding to what people have said about Pellew Dining Hall. The wait figure of 12 to 18 minutes at peak matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: the furthest hall from anywhere, next to the athletics centre. Nobody tells you this at orientation.
 ```
 
 **Chunk 5** — source: `housing_innisfree_hall.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+Innisfree Hall — what it's actually like
+
+Transferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.
+
+The good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.
+
+The bad: no air conditioning, which matters for the first three weeks of September.
+
+Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.
 ```
 
 ## Sample Answer
@@ -86,27 +119,38 @@
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question:**
+**Question:**  What's the wait time like at Pellew Dining Hall?
 
-**Answer:**
+**Answer:** At Pellew Dining Hall, the wait time is 12 to 18 minutes at peak.
+
+Sources: dining_pellew_dining_hall.txt and dining_pellew_dining_hall_followup.txt
 
 ```
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.6
 
 <!-- The number you set in config.py, and how you got there.
 
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
+     In-corpus questions scored between 0.177 and 0.392. Out-of-scope questions
+     scored between 0.764 and 0.948. There's a wide gap between the two groups
+     with no overlap, so 0.6 sits comfortably in the middle and cleanly
+     separates answerable questions from ones the corpus can't cover.
 
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+| How long do I have to add a course? | Yes | 0.392 |
+| How much does laundry cost in the dorms? | Yes | 0.379 |
+| What's the workload like for HIST 118? | Yes | 0.314 |
+| Is Innisfree Hall renovated? | Yes | 0.335 |
+| What's the wait time like at Pellew Dining Hall? | Yes | 0.177 |
+| What's the capital of France? | No | 0.843 |
+| How do I file my taxes? | No | 0.870 |
+| What's the best pizza topping? | No | 0.764 |
+| Who won the last Super Bowl? | No | 0.948 |
+| How do I fix a flat tire? | No | 0.798 |
 
 ## How I Used AI
 
@@ -119,9 +163,18 @@
 
      Milestone 5. -->
 
-**1.**
+**1.**  I asked Claude for an example chunking function for a short-post
+corpus. It gave me a paragraph-and-sentence-splitting strategy with
+overlap, but when I ran it on my `campus_life` data, almost every post
+fit in one chunk anyway (avg 317 chars vs 800 chunk_size), so the
+sentence-splitting logic never actually fired. I kept the simpler
+"whole post if it fits" behavior since that's what my data needed.
 
-**2.**
+**2.** I asked Claude to help me read my 10 distance scores (5 in-corpus,
+5 out-of-scope) to decide on a relevance cutoff. It pointed out the two
+groups had a wide, non-overlapping gap (0.177–0.392 vs 0.764–0.948), so
+I kept the starter's default of 0.6 rather than second-guessing it, since
+it already sat cleanly in the middle of that gap.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
@@ -131,7 +184,7 @@
 ---
 
 # Week 2
-
+ 
 <!-- These sections get ADDED to what's already above. Don't delete or rewrite
      week 1 — the point is that someone can see what you said before you knew
      how it went. -->

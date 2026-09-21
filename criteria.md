@@ -23,6 +23,8 @@ For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
 **Why this target:**
+
+My corpus has some topics, like specific dorm laundry costs, covered by only one or two documents, so I expect at least one question to be a harder retrieval case, not a clean 5 of 5.
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
@@ -33,6 +35,9 @@ contains the answer.
 Every answer the system produces names at least one source document.
 
 **Why this target:**
+
+My pipeline's grounding logic requires a source citation before it returns an answer at all, so all 5 should be achievable, not just 4.
+
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
 
@@ -50,12 +55,16 @@ in at least 4 of 5 tries.
      just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
 
 **Why this target:**
+
+When I tested this in Milestone 4, my in-corpus questions scored 0.177–0.392 distance and my out-of-scope questions scored 0.764–0.948, a wide gap with no overlap, so I expect the gate to catch all 5, not just 4.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
 ---
 
 ## 4. Something about your chunks
+
+No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at either end.
 
 <!-- YOU WRITE THIS ONE.
      Making sure each chunk in a sample of 10 is under 40 characters or over 500 characters, and none cuts off mid-sentence. 
@@ -73,6 +82,10 @@ in at least 4 of 5 tries.
 
 
 **Why this target:**
+
+When I read my Milestone 3 sample chunks, the shortest was 178 characters
+and each one was a complete post, so 150 is a safe floor that would only
+trip if my chunker started fragmenting posts.
 <!--
 No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at either end.
 >
@@ -81,6 +94,9 @@ No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at e
 ---
 
 ## 5. Your choice
+
+Every source the system names actually contains the specific fact used in
+the answer, in at least 4 of my 5 test questions.
 
 <!-- Every source the system names actually contains the elements used in the answer, in at least 4 of my 5 test questions.
 
@@ -93,6 +109,12 @@ No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at e
 
 
 **Why this target:**
+
+
+Citing a source isn't enough if it's the wrong one, I want to catch cases
+where the system names a file that's merely related rather than the one
+that actually contains the fact used.
+
 <!--
 Every source the system names actually contains the specific fact used in the answer, in at least 4 of my 5 test questions.>
 
@@ -112,8 +134,9 @@ Every source the system names actually contains the specific fact used in the an
          For at least 4 of my 5 test questions, the retrieved chunks include
          one that contains the answer.
 
-         **Why this target:** ...
+         **Why this target:** 
 
+ 
          > **Revised in week 2:** For at least 4 of 5 questions, the top three
          > results contain the answer.
          >
