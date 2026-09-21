@@ -41,6 +41,8 @@
      If you changed your mind partway through, say so and say why. That's worth
      more than pretending you got it right first time.
 
+     The `campus_life` corpus is made of short forum-style posts, averaging 317 characters against a chunk_size of 800. My strategy keeps a whole post as one chunk whenever it fits, and only falls back to splitting on paragraph breaks (and then sentences) if a post exceeds chunk_size. In practice, almost every post in this corpus fit in one chunk on its own, so the paragraph/sentence fallback rarely triggered. This makes sense for the data: each post is already one self-contained thought (a question, a piece of advice, a workload report), so splitting it further would just break apart context that belongs together.
+
      Milestone 3. -->
 
 ## Sample Chunks
@@ -54,27 +56,27 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `course_biol_160.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `course_hist_118_workload.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `dining_pellew_dining_hall_followup.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `housing_innisfree_hall.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
 ```
