@@ -88,7 +88,7 @@ and each one was a complete post, so 150 is a safe floor that would only
 trip if my chunker started fragmenting posts.
 <!--
 No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence at either end.
->
+-->
 
 
 ---
@@ -116,7 +116,7 @@ where the system names a file that's merely related rather than the one
 that actually contains the fact used.
 
 <!--
-Every source the system names actually contains the specific fact used in the answer, in at least 4 of my 5 test questions.>
+Every source the system names actually contains the specific fact used in the answer, in at least 4 of my 5 test questions.-->
 
 
 
