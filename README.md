@@ -22,15 +22,15 @@ Lianne Poblador - campus_life corpus
 
 ## What This Does
 
-     This system answers questions about a `campus_life` corpus, a set of
-     short forum-style posts covering things like course workloads, dorm
-     amenities and costs, dining hall wait times, and administrative deadlines.
-     Ask it a question a student would actually ask (like "how much does laundry
-     cost in the dorms?") and it retrieves the relevant post and answers from it,
-     citing the source file. If you ask something outside the corpus, it says so
-     instead of guessing.
+This system answers questions about a `campus_life` corpus, a set of
+short forum-style posts covering things like course workloads, dorm
+amenities and costs, dining hall wait times, and administrative deadlines.
+Ask it a question a student would actually ask (like "how much does laundry
+cost in the dorms?") and it retrieves the relevant post and answers from it,
+citing the source file. If you ask something outside the corpus, it says so
+instead of guessing.
 
-     Milestone 5.
+Milestone 5.
 
 ## Chunking Strategy
 
@@ -38,27 +38,27 @@ Lianne Poblador - campus_life corpus
 **Overlap:** 120
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
+long sectioned guides don't want the same chunking, and "800 seemed
+reasonable" earns nothing. Point at something you noticed when you read
+the documents in Milestone 1.
 
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
+If you changed your mind partway through, say so and say why. That's worth
+more than pretending you got it right first time.
 
-     The `campus_life` corpus is made of short forum-style posts, averaging 317 characters against a chunk_size of 800. My strategy keeps a whole post as one chunk whenever it fits, and only falls back to splitting on paragraph breaks (and then sentences) if a post exceeds chunk_size. In practice, almost every post in this corpus fit in one chunk on its own, so the paragraph/sentence fallback rarely triggered. This makes sense for the data: each post is already one self-contained thought (a question, a piece of advice, a workload report), so splitting it further would just break apart context that belongs together.
+The `campus_life` corpus is made of short forum-style posts, averaging 317 characters against a chunk size of 800. My strategy keeps a whole post as one chunk whenever it fits, and only falls back to splitting on paragraph breaks (and then sentences) if a post exceeds the chunk size. In practice, almost every post in this corpus fit in one chunk on its own, so the paragraph and sentence fallback rarely triggered. This makes sense for the data: each post is already one self-contained thought (a question, a piece of advice, a workload report), so splitting it further would break apart context that belongs together.
 
-     Milestone 3. -->
+Milestone 3. -->
 
 ## Sample Chunks
 
 <!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
+AND the function that produced it — the grader checks your code against
+what you claim here.
 
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
+`python app.py chunks -n 5` prints all three for you. Copy them straight
+across.
 
-     Milestone 3. -->
+Milestone 3. -->
 
 **Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
 
@@ -117,7 +117,7 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 ## Sample Answer
 
 <!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
+visible. Milestone 4. -->
 
 **Question:**  What's the wait time like at Pellew Dining Hall?
 
@@ -132,12 +132,12 @@ Sources: dining_pellew_dining_hall.txt and dining_pellew_dining_hall_followup.tx
 
 <!-- The number you set in config.py, and how you got there.
 
-     In-corpus questions scored between 0.177 and 0.392. Out-of-scope questions
-     scored between 0.764 and 0.948. There's a wide gap between the two groups
-     with no overlap, so 0.6 sits comfortably in the middle and cleanly
-     separates answerable questions from ones the corpus can't cover.
+In-corpus questions scored between 0.177 and 0.392. Out-of-scope questions
+scored between 0.764 and 0.948. There's a wide gap between the two groups
+with no overlap, so 0.6 sits comfortably in the middle and cleanly
+separates answerable questions from ones the corpus can't cover.
 
-     Milestone 4. -->
+Milestone 4. -->
 
 | Question | In corpus? | Best distance |
 |---|---|---|
@@ -155,13 +155,13 @@ Sources: dining_pellew_dining_hall.txt and dining_pellew_dining_hall_followup.tx
 ## How I Used AI
 
 <!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+what you changed about it.
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
+"I asked Claude to write the chunking function from my notes. It ignored
+the overlap, so I added that myself" is the level of detail we're after.
+"I used AI to help me code" is not.
 
-     Milestone 5. -->
+Milestone 5. -->
 
 **1.**  I asked Claude for an example chunking function for a short-post
 corpus. It gave me a paragraph-and-sentence-splitting strategy with
@@ -177,29 +177,29 @@ I kept the starter's default of 0.6 rather than second-guessing it, since
 it already sat cleanly in the middle of that gap.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
-     Doing one? Say so here BEFORE you start. A feature this README never
-     claims earns nothing.
-     ───────────────────────────────────────────────────────────────────────── -->
+Doing one? Say so here BEFORE you start. A feature this README never
+claims earns nothing.
+───────────────────────────────────────────────────────────────────────── -->
 
 ---
 
 # Week 2
- 
+
 <!-- These sections get ADDED to what's already above. Don't delete or rewrite
-     week 1 — the point is that someone can see what you said before you knew
-     how it went. -->
+week 1 — the point is that someone can see what you said before you knew
+how it went. -->
 
 ## Run Log — Before
 
 <!-- Your five criteria, three runs each. `python run_eval.py --label before`
-     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
-     writes it all into results/ for you. Targets come from criteria.md; the
-     verdict column is your call.
+runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
+writes it all into results/ for you. Targets come from criteria.md; the
+verdict column is your call.
 
-     Criterion 3 is measured in one deterministic pass rather than three, so
-     the same number goes in all three run columns. That's correct, not lazy.
+Criterion 3 is measured in one deterministic pass rather than three, so
+the same number goes in all three run columns. That's correct, not lazy.
 
-     Milestone 1. -->
+Milestone 1. -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
@@ -210,19 +210,19 @@ it already sat cleanly in the middle of that gap.
 | 5. Every named source contains the fact used in the answer | 4 of 5 | 3 of 5 | 3 of 5 | 3 of 5 | MISSED |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
-     runs — the actual text your system produced, not a description of it.
-     Name the file and function that produced it. -->
+runs — the actual text your system produced, not a description of it.
+Name the file and function that produced it. -->
 
 ## Verdicts
 
 <!-- MET or MISSED for each of the five, against the target you wrote last
-     week — not a new one. Plus a sentence on how you decided. That sentence
-     matters most where it was close.
+week — not a new one. Plus a sentence on how you decided. That sentence
+matters most where it was close.
 
-     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
-     The target has to hold, not show up occasionally.
+If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
+The target has to hold, not show up occasionally.
 
-     Milestone 2. -->
+Milestone 2. -->
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
@@ -235,30 +235,31 @@ it already sat cleanly in the middle of that gap.
 ## Diagnoses
 
 <!-- For each miss: which stage caused it, and how. The stage alone isn't
-     enough — you need the mechanism.
+enough — you need the mechanism.
 
-     Not a diagnosis: "Question 3 didn't work."
-     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
-                       one sentence that got split across two chunks, so
-                       neither chunk on its own contains it."
+Not a diagnosis: "Question 3 didn't work."
+A diagnosis:     "Question 3 asks about laundry costs. The answer is in
+                  one sentence that got split across two chunks, so
+                  neither chunk on its own contains it."
 
-     The five stages: loading → chunking → embedding → retrieval → generation.
+The five stages: loading → chunking → embedding → retrieval → generation.
 
-     Look for a pattern. If three misses all ask about numbers, that's one
-     problem, not three.
+Look for a pattern. If three misses all ask about numbers, that's one
+problem, not three.
 
-     Missed nothing? Say so, then say honestly whether your targets were set
-     low, and which one you'd tighten and to what.
+Missed nothing? Say so, then say honestly whether your targets were set
+low, and which one you'd tighten and to what.
 
-     Milestone 3. -->
-     ### Criterion 5: every named source contains the fact used (MISSED, 3 of 5)
+Milestone 3. -->
 
-     **Stage: retrieval (the relevance gate).** The sources the system cited were fine. The miss came from two questions that never got an answer because the gate refused them.
+### Criterion 5: every named source contains the fact used (MISSED, 3 of 5)
 
-     - **Parking:** "What parking pass should I get as a commuter?" retrieved `admin_parking_permits.txt` first, but the best distance was 0.6822, above the 0.6 cutoff, so the system returned "I don't have enough information about that." The mechanism is a wording mismatch. The post says "student permits" and "west lots," and my question said "commuter pass." I confirmed this with `python app.py retrieve`: "How do I get a student parking permit?" scored 0.528 and "When do west lot parking permits sell out?" scored 0.184, both under the cutoff, with the same file ranked first each time. The content was retrievable. Only the phrasing pushed it past the gate.
-     - **Walking:** "Where is a good easy place to walk for a beginner?" was refused at 0.6737. This is not a pipeline fault. `transit_walking.txt` only lists walking times between campus buildings, so the corpus has no answer and the gate was right.
+**Stage: retrieval (the relevance gate).** The sources the system cited were fine. The miss came from two questions that never got an answer because the gate refused them.
 
-     **Pattern:** both refused questions were written in my own words and scored 0.67 to 0.68, while my Milestone 4 in-corpus questions scored 0.177 to 0.392. Math 220 (0.544) also passed with little room to spare. The 0.6 cutoff was tuned on questions that closely matched the post wording, so it is tight for paraphrased ones.
+- **Parking:** "What parking pass should I get as a commuter?" retrieved `admin_parking_permits.txt` first, but the best distance was 0.6822, above the 0.6 cutoff, so the system returned "I don't have enough information about that." The mechanism is a wording mismatch. The post says "student permits" and "west lots," and my question said "commuter pass." I confirmed this with `python app.py retrieve`: "How do I get a student parking permit?" scored 0.528 and "When do west lot parking permits sell out?" scored 0.184, both under the cutoff, with the same file ranked first each time. The content was retrievable. Only the phrasing pushed it past the gate.
+- **Walking:** "Where is a good easy place to walk for a beginner?" was refused at 0.6737. This is not a pipeline fault. `transit_walking.txt` only lists walking times between campus buildings, so the corpus has no answer and the gate was right.
+
+**Pattern:** both refused questions were written in my own words and scored 0.67 to 0.68, while my Milestone 4 in-corpus questions scored 0.177 to 0.392. Math 220 (0.544) also passed with little room to spare. The 0.6 cutoff was tuned on questions that closely matched the post wording, so it is tight for paraphrased ones.
 
 ## The Improvement
 
@@ -267,12 +268,12 @@ it already sat cleanly in the middle of that gap.
 **Why I picked it:**
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
-     you picked a fix because it sounded impressive. -->
+you picked a fix because it sounded impressive. -->
 
 ### Run Log — After
 
 <!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
+`python run_eval.py --label after` -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
@@ -285,25 +286,25 @@ it already sat cleanly in the middle of that gap.
 **Did it help?**
 
 <!-- Say plainly whether it did, and how you know. If it made things worse,
-     say that — a change that backfired, honestly reported, earns full credit
-     and is more interesting than one that worked. What matters is that you can
-     tell.
+say that — a change that backfired, honestly reported, earns full credit
+and is more interesting than one that worked. What matters is that you can
+tell.
 
-     Milestone 4. -->
+Milestone 4. -->
 
 ## What's Still Broken
 
 <!-- For each criterion still missed after your fix: what you'd do about it,
-     and why you stopped where you did.
+and why you stopped where you did.
 
-     "I ran out of time" is fine if it's true. Pretending nothing is left is
-     not.
+"I ran out of time" is fine if it's true. Pretending nothing is left is
+not.
 
-     Milestone 5. -->
+Milestone 5. -->
 
 ## What I'd Do Differently
 
 <!-- Knowing what you know now — which of your five criteria would you write
-     differently, and why?
+differently, and why?
 
-     Milestone 5. -->
+Milestone 5. -->
