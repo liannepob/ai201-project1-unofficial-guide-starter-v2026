@@ -226,11 +226,11 @@ it already sat cleanly in the middle of that gap.
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the answer | MET | 4 of 5, exactly at the target. Math, dining, parking and laundry each retrieved a file someone could answer from. Walking did not, since transit_walking.txt only lists walking times between campus buildings. Parking and laundry are close calls: the parking file never mentions commuters, and the laundry files give busy times rather than a way to check availability, so a stricter reading would make this MISSED. |
+| 2 | Every answer names a source | MET | All 3 answers the system produced named source files. The 2 refusals returned no answer, so there was nothing to cite. |
+| 3 | Gate stops out-of-corpus questions | MET | Refused 5 of 5, with distances 0.825 to 0.934, all above the 0.6 cutoff. Target was 4 of 5. |
+| 4 | No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence | MET | All 10 sampled chunks passed. The smallest file in the whole corpus is 183 characters and every post fits in one chunk, so nothing is split or cut off. |
+| 5 | Every named source contains the fact used in the answer | MISSED | Only 3 of 5 questions produced a sourced answer, so 4 of 5 was out of reach. Parking (best distance 0.682) and walking (0.674) were refused by the gate. The 3 answered questions were clean: every cited dining, math and laundry file contained the fact used. |
 
 ## Diagnoses
 
