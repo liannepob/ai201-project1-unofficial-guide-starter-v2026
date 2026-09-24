@@ -251,6 +251,14 @@ it already sat cleanly in the middle of that gap.
      low, and which one you'd tighten and to what.
 
      Milestone 3. -->
+     ### Criterion 5: every named source contains the fact used (MISSED, 3 of 5)
+
+     **Stage: retrieval (the relevance gate).** The sources the system cited were fine. The miss came from two questions that never got an answer because the gate refused them.
+
+     - **Parking:** "What parking pass should I get as a commuter?" retrieved `admin_parking_permits.txt` first, but the best distance was 0.6822, above the 0.6 cutoff, so the system returned "I don't have enough information about that." The mechanism is a wording mismatch. The post says "student permits" and "west lots," and my question said "commuter pass." I confirmed this with `python app.py retrieve`: "How do I get a student parking permit?" scored 0.528 and "When do west lot parking permits sell out?" scored 0.184, both under the cutoff, with the same file ranked first each time. The content was retrievable. Only the phrasing pushed it past the gate.
+     - **Walking:** "Where is a good easy place to walk for a beginner?" was refused at 0.6737. This is not a pipeline fault. `transit_walking.txt` only lists walking times between campus buildings, so the corpus has no answer and the gate was right.
+
+     **Pattern:** both refused questions were written in my own words and scored 0.67 to 0.68, while my Milestone 4 in-corpus questions scored 0.177 to 0.392. Math 220 (0.544) also passed with little room to spare. The 0.6 cutoff was tuned on questions that closely matched the post wording, so it is tight for paraphrased ones.
 
 ## The Improvement
 
