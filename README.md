@@ -203,11 +203,11 @@ it already sat cleanly in the middle of that gap.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 3 of 3 answered | 3 of 3 answered | 3 of 3 answered | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence | 10 of 10 | 10 of 10 | 10 of 10 | 10 of 10 | MET |
+| 5. Every named source contains the fact used in the answer | 4 of 5 | 3 of 5 | 3 of 5 | 3 of 5 | MISSED |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
