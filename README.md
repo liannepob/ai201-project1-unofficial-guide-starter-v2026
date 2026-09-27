@@ -176,6 +176,10 @@ groups had a wide, non-overlapping gap (0.177–0.392 vs 0.764–0.948), so
 I kept the starter's default of 0.6 rather than second-guessing it, since
 it already sat cleanly in the middle of that gap.
 
+**3.** For Week 2, I used Claude to help trace criterion 5's failure to a specific stage. I pasted my parking question's retrieved chunks and asked whether the miss was retrieval or the gate. It suggested testing rephrased versions of the question through `python app.py retrieve`, which showed the same file scoring 0.682, 0.528 and 0.184 depending on wording, confirming the gate (not retrieval) was the cause. I ran those tests and read the actual file contents myself to confirm the fix would be safe against my out-of-scope questions before changing `config.py`.
+
+**4.** Before finalizing my Milestone 2 verdict on criterion 1, I asked Claude to argue the opposite verdict on my close calls (parking and laundry, which only loosely matched their retrieved files). It pointed out the laundry answer didn't actually address "how do I know when machines are available" even though it cited the right files, which made me note that gap in my "How I decided" column instead of just counting it as a clean pass.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
 Doing one? Say so here BEFORE you start. A feature this README never
 claims earns nothing.
@@ -298,17 +302,12 @@ Milestone 4. -->
 
 ## What's Still Broken
 
-<!-- For each criterion still missed after your fix: what you'd do about it,
-and why you stopped where you did.
+Criterion 5 is still missed (4, 3, 4 of 5 across the three after-runs). The gate is no longer the problem — `admin_parking_permits.txt` is retrieved correctly every time at 0.6822. What's left is generation: the model sometimes says "I don't have enough information" even when the retrieved chunk answers the question (parking run 2). That's a prompt or grounding-instruction issue, not a retrieval or cutoff issue, so raising the cutoff further wouldn't fix it and would risk letting a real out-of-scope question through instead (out-of-scope questions start at 0.825, so there's still room, but not unlimited room).
 
-"I ran out of time" is fine if it's true. Pretending nothing is left is
-not.
-
-Milestone 5. -->
+What I'd try next: tighten the generation prompt so it's told explicitly to use the top retrieved chunk if it's topically related, rather than defaulting to a refusal when the connection isn't a word-for-word match. I stopped here because that's a prompt-engineering change, not a config change, and I wanted to isolate this unit's improvement to the one thing my diagnosis pointed at (the gate) rather than changing two things at once and losing the ability to tell which one moved the numbers.
 
 ## What I'd Do Differently
 
-<!-- Knowing what you know now — which of your five criteria would you write
-differently, and why?
+I'd rewrite criterion 5. Right now it's "every named source contains the fact used, in at least 4 of 5 questions," but a refused question can never satisfy it, so the real ceiling was 3 of 5 until the gate changed — the target didn't account for the gate as a separate failure mode from citation accuracy. I'd split it into two criteria next time: one for the gate (does it correctly pass questions the corpus can answer) and one purely for citation accuracy on questions that do get answered. That would have made this unit's diagnosis land faster instead of me needing to work out that two different mechanisms were both landing on the same criterion.
 
-Milestone 5. -->
+I'd also tighten criterion 4. A 150-character floor turned out to be nearly unfailable once I saw that every post in the corpus is single-chunked and the smallest file is 183 characters — it never had a real chance to catch anything. Next time I'd set it against something the chunker could actually get wrong, like requiring a specific fraction of chunks to be full posts rather than fragments.
