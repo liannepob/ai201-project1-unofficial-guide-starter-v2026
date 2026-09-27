@@ -263,9 +263,9 @@ Milestone 3. -->
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** Raised the relevance gate cutoff in `config.py` from 0.6 to 0.7.
 
-**Why I picked it:**
+**Why I picked it:** My diagnosis on criterion 5 traced the miss to a wording mismatch at the gate, not retrieval — the parking question retrieved the right file (`admin_parking_permits.txt`) at 0.6822, just above the old 0.6 cutoff. 0.7 sits above that and below every out-of-scope question I've seen (0.764 and up), so it should let parking through without opening the gate to anything actually out of scope.
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
 you picked a fix because it sounded impressive. -->
@@ -277,13 +277,17 @@ you picked a fix because it sounded impressive. -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5  | MET |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
 | 2. Every answer names a source | 5 of 5 | 4 of 4 answered | 4 of 4 answered | 4 of 4 answered | MET |
 | 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 4. No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence | 10 of 10 | 10 of 10 |10 of 10 | 10 of 10 | MET |
-| 5. Every answer source contains the fact used in the answer | 4 of 5 | 4 of 5 | 3 of 5 | 4 of 5 | MISSED |
+| 4. No chunk in a sample of 10 is under 150 characters or cuts off mid-sentence | 10 of 10 | 10 of 10 | 10 of 10 | 10 of 10 | MET |
+| 5. Every named source contains the fact used in the answer | 4 of 5 | 4 of 5 | 3 of 5 | 4 of 5 | MISSED |
 
-**Did it help?**
+**Did it help?** Partly. The gate now lets parking through, and it retrieves the right chunk (`admin_parking_permits.txt`) every time — but the model only grounds its answer in it 2 of 3 runs. Run 1 and run 3 gave a real answer (west lot permits go on sale in August and sell out in about 3 days; the east lot never sells out). Run 2 said "I don't have enough information" even though the same chunk was retrieved and cited. So criterion 5 moved from a flat 3/5 in every run before, to 4, 3, 4 after — the gate fix worked, but it exposed a separate inconsistency at generation that a cutoff change can't touch.
+
+Walking also passed the gate now (0.674, under 0.7), but the model correctly said it didn't have enough information in all 3 runs, since `transit_walking.txt` only lists walking times between buildings. No hallucination, which is what I was watching for.
+
+Dining, math and laundry are unchanged (their distances, 0.33, 0.54 and 0.45, are all well clear of both cutoffs). Every out-of-scope question is still refused (lowest score 0.825), so the change cost nothing on criterion 3.
 
 <!-- Say plainly whether it did, and how you know. If it made things worse,
 say that — a change that backfired, honestly reported, earns full credit
